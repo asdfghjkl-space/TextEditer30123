@@ -30,10 +30,12 @@ namespace TextEditer30123
         //上書き保存
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(this.fileName != "" )
+            //ファイル名がなければ新規作成
+            if(this.fileName == "" )
             {
                 FileSave(fileName);
             }
+            //ファイル名があれば上書き保存
             else
             {
                 SaveNameAToolStripMenuItem_Click(sender,e);
@@ -70,5 +72,57 @@ namespace TextEditer30123
             }
         }
 
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("ファイルを保存しますか？", "質問", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+
+            if(result == DialogResult.Yes)
+            {
+                if (sfdFileSave.ShowDialog() == DialogResult.OK)
+                {
+                    FileSave(sfdFileSave.FileName);
+                }
+            }
+            else if(result == DialogResult.No)
+            {
+                Clear();
+            }
+
+        }
+
+        private void Clear()
+        {
+            rtTextArea.Text = "";
+        }
+
+        private void 元に戻すUToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.Undo();
+        }
+
+        private void やり直しRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.Redo();
+        }
+
+        private void 切り取りTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.Cut();
+        }
+
+        private void コピーCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.Copy();
+        }
+
+        private void 貼り付けPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtTextArea.Paste();
+        }
+
+        private void 削除DToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
