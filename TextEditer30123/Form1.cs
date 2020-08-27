@@ -74,20 +74,34 @@ namespace TextEditer30123
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("ファイルを保存しますか？", "質問", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-
-            if(result == DialogResult.Yes)
-            {
-                if (sfdFileSave.ShowDialog() == DialogResult.OK)
-                {
-                    FileSave(sfdFileSave.FileName);
-                }
-            }
-            else if(result == DialogResult.No)
+            if (rtTextArea.Text == "")
             {
                 Clear();
             }
+            else
+            {
+                DialogResult result = MessageBox.Show("ファイルを保存しますか？", "質問", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
 
+                if (result == DialogResult.Yes)
+                {
+                    if (File.Exists(fileName))
+                    {
+                        SaveNameAToolStripMenuItem_Click(sender, e);
+                    }
+                    else
+                    {
+                        if (sfdFileSave.ShowDialog() == DialogResult.OK)
+                        {
+                            FileSave(sfdFileSave.FileName);
+                        }
+                    }
+                }
+                else if (result == DialogResult.No)
+                {
+                    Clear();
+                }
+
+            }
         }
 
         private void Clear()
@@ -122,7 +136,7 @@ namespace TextEditer30123
 
         private void 削除DToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            rtTextArea.Text = rtTextArea.Text.Remove(rtTextArea.SelectionStart, rtTextArea.SelectionLength);
         }
     }
 }
